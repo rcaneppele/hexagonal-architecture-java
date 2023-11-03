@@ -1,0 +1,15 @@
+package br.com.caelum.cursos.domain.sala;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@EqualsAndHashCode(of = "nome")
+@ToString(of = {"nome", "capacidade"})
+public class Sala {
+
+    private String nome;
+    private Integer capacidade;
+
+}
