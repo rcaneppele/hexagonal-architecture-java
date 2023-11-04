@@ -16,4 +16,11 @@ public class Curso {
     private Nivel nivel;
     private Duration duracaoEmHoras;
 
+    public Curso(String codigo, String nome, Nivel nivel, Duration duracaoEmHoras) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.nivel = nivel;
+        this.duracaoEmHoras = duracaoEmHoras;
+    }
+
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.util.UUID;
 
 @Getter
-@EqualsAndHashCode(of = "codigo")
+@EqualsAndHashCode(of = {"turma", "estudante"})
 @ToString(of = {"codigo", "turma", "estudante"})
 public class Matricula {
 
@@ -21,6 +21,8 @@ public class Matricula {
         this.codigo = UUID.randomUUID().toString();
         this.turma = turma;
         this.estudante = estudante;
+        this.turma.registrarMatricula(this);
+        this.estudante.registrarMatricula(this);
     }
 
 }

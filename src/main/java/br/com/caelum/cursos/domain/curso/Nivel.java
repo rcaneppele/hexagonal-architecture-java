@@ -3,6 +3,7 @@ package br.com.caelum.cursos.domain.curso;
 import lombok.Getter;
 
 @Getter
+public
 enum Nivel {
 
     BASICO("Básico"),

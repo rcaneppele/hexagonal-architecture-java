@@ -23,6 +23,14 @@ public class Estudante {
 
     private Set<Matricula> matriculas = new HashSet<>();
 
+    public Estudante(String nome, Cpf cpf, LocalDate dataDeNascimento, Email email, Telefone celular) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataDeNascimento = dataDeNascimento;
+        this.email = email;
+        this.celular = celular;
+    }
+
     public boolean estaComLimiteDeTurmasEmAndamento() {
         var turmasEmAndamento = matriculas
                 .stream()

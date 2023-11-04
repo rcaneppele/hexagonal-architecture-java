@@ -25,6 +25,15 @@ public class Turma {
 
     private Set<Matricula> matriculas = new HashSet<>();
 
+    public Turma(String codigo, Curso curso, Sala sala, Turno turno, LocalDate dataInicio, LocalDate dataFim) {
+        this.codigo = codigo;
+        this.curso = curso;
+        this.sala = sala;
+        this.turno = turno;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+    }
+
     public boolean estaLotada() {
         return this.matriculas.size() == this.sala.getCapacidade();
     }

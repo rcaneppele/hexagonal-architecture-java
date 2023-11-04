@@ -2,9 +2,9 @@ package br.com.caelum.cursos.domain.estudante;
 
 import java.util.Objects;
 
-record Email(String email) {
+public record Email(String email) {
 
-    Email {
+    public Email {
         validar(email);
     }
 

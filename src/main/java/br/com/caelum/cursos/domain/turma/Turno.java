@@ -3,7 +3,7 @@ package br.com.caelum.cursos.domain.turma;
 import lombok.Getter;
 
 @Getter
-enum Turno {
+public enum Turno {
 
     MATUTINO("Matutino"),
     VESPERTINO("Vespertino"),

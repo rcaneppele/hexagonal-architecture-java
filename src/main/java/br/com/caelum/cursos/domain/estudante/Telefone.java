@@ -2,9 +2,9 @@ package br.com.caelum.cursos.domain.estudante;
 
 import java.util.Objects;
 
-record Telefone(String ddd, String numero, boolean whatsapp) {
+public record Telefone(String ddd, String numero, boolean whatsapp) {
 
-    Telefone {
+   public Telefone {
         validar(ddd, numero);
     }
 

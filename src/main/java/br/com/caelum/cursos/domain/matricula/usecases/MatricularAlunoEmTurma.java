@@ -27,8 +27,6 @@ public class MatricularAlunoEmTurma implements MatricularAlunoEmTurmaPort {
 
         var matricula = new Matricula(turma, estudante);
         matriculaRepository.save(matricula);
-        estudante.registrarMatricula(matricula);
-        turma.registrarMatricula(matricula);
     }
 
     private void validarTurma(Turma turma) {
