@@ -2,9 +2,9 @@ package br.com.caelum.cursos.domain.estudante;
 
 import java.util.Objects;
 
-record Cpf(String numero) {
+public record Cpf(String numero) {
 
-    Cpf {
+    public Cpf {
         validar(numero);
     }
 
