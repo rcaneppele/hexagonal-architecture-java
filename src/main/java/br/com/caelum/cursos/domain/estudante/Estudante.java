@@ -1,5 +1,6 @@
 package br.com.caelum.cursos.domain.estudante;
 
+import br.com.caelum.cursos.domain.estudante.ports.DadosParaCadastrarEstudante;
 import br.com.caelum.cursos.domain.matricula.Matricula;
 import br.com.caelum.cursos.domain.turma.Turma;
 import lombok.EqualsAndHashCode;
@@ -29,6 +30,10 @@ public class Estudante {
         this.dataDeNascimento = dataDeNascimento;
         this.email = email;
         this.celular = celular;
+    }
+
+    public Estudante(DadosParaCadastrarEstudante dados) {
+        this(dados.nome(), dados.cpf(), dados.dataDeNascimento(), dados.email(), dados.celular());
     }
 
     public boolean estaComLimiteDeTurmasEmAndamento() {
