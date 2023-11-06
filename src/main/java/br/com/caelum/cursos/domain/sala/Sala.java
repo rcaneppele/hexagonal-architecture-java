@@ -1,5 +1,6 @@
 package br.com.caelum.cursos.domain.sala;
 
+import br.com.caelum.cursos.domain.sala.ports.DadosParaCadastrarSala;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,6 +16,10 @@ public class Sala {
     public Sala(String nome, Integer capacidade) {
         this.nome = nome;
         this.capacidade = capacidade;
+    }
+
+    public Sala(DadosParaCadastrarSala dados) {
+        this(dados.nome(), dados.capacidade());
     }
 
 }

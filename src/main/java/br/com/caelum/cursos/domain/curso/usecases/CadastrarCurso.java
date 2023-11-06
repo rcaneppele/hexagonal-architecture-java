@@ -14,7 +14,7 @@ public class CadastrarCurso implements CadastrarCursoPort {
 
     public void execute(DadosParaCadastrarCurso dados) {
         validarCurso(dados);
-        repository.save(new Curso(dados.codigo(), dados.nome(), dados.nivel(), dados.duracaoEmHoras()));
+        repository.save(new Curso(dados));
     }
 
     private void validarCurso(DadosParaCadastrarCurso dados) {

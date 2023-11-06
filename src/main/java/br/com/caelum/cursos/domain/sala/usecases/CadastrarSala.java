@@ -14,7 +14,7 @@ public class CadastrarSala implements CadastrarSalaPort {
 
     public void execute(DadosParaCadastrarSala dados) {
         validarSala(dados);
-        repository.save(new Sala(dados.nome(), dados.capacidade()));
+        repository.save(new Sala(dados));
     }
 
     private void validarSala(DadosParaCadastrarSala dados) {
