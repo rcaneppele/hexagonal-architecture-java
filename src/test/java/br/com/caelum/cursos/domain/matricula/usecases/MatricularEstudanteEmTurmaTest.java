@@ -76,7 +76,7 @@ class MatricularEstudanteEmTurmaTest {
         turma = TurmaBuilder.buildFrom(turma, SalaBuilder.build("Sala 2", 1));
 
         turma.registrarMatricula(new Matricula(turma, estudante));
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: turma está lotada!", ex.getMessage());
@@ -87,7 +87,7 @@ class MatricularEstudanteEmTurmaTest {
     void cenario2() {
         turma = TurmaBuilder.buildFrom(turma, turma.getDataInicio().minusDays(2), turma.getDataFim());
 
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: turma com período de matriculas encerado!", ex.getMessage());
@@ -98,8 +98,8 @@ class MatricularEstudanteEmTurmaTest {
     void cenario3() {
         estudante.registrarMatricula(new Matricula(turma, estudante));
 
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: estudante já possui matricula para esta turma!", ex.getMessage());
@@ -137,8 +137,8 @@ class MatricularEstudanteEmTurmaTest {
         estudante.registrarMatricula(new Matricula(turma, estudante));
         estudante.registrarMatricula(new Matricula(turma2, estudante));
 
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma3);
-        given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma3);
+        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: estudante com limite de turmas em andamento!", ex.getMessage());
@@ -147,11 +147,11 @@ class MatricularEstudanteEmTurmaTest {
     @Test
     @DisplayName("Deveria matricular estudante com uma ou nenhuma matricula")
     void cenario5() {
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).save(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
 
         var turma2 = TurmaBuilder.build(
                 "T-0002",
@@ -166,41 +166,41 @@ class MatricularEstudanteEmTurmaTest {
                         "Sala 01",
                         2));
 
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma2);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma2);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).save(new Matricula(turma2, estudante));
+        verify(matriculaRepository).registrar(new Matricula(turma2, estudante));
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas no dia anterior ao inicio da turma")
     void cenario6() {
         turma = TurmaBuilder.buildFrom(turma, LocalDate.now().plusDays(1), turma.getDataFim());
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).save(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas no dia do inicio da turma")
     void cenario7() {
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).save(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas uma dia apos o inicio da turma")
     void cenario8() {
         turma = TurmaBuilder.buildFrom(turma, LocalDate.now().minusDays(1), turma.getDataFim());
-        given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).save(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
     }
 
 }

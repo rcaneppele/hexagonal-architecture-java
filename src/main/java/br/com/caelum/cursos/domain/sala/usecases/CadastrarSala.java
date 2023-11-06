@@ -14,7 +14,7 @@ public class CadastrarSala implements CadastrarSalaPort {
 
     public void execute(DadosParaCadastrarSala dados) {
         validarSala(dados);
-        repository.save(new Sala(dados));
+        repository.cadastrar(new Sala(dados));
     }
 
     private void validarSala(DadosParaCadastrarSala dados) {
@@ -22,7 +22,7 @@ public class CadastrarSala implements CadastrarSalaPort {
             throw new RegraDeNegocioException("Cadastro não realizado: Capacidade mínima deve ser 8!");
         }
 
-        var salaJaCadastrada = repository.existsByNome(dados.nome());
+        var salaJaCadastrada = repository.nomeJaCadastrado(dados.nome());
         if (salaJaCadastrada) {
             throw new RegraDeNegocioException("Cadastro não realizado: Nome já utilizado em outra sala!");
         }

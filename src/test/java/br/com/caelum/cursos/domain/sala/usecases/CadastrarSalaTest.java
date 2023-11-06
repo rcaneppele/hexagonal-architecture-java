@@ -29,7 +29,7 @@ class CadastrarSalaTest {
     @DisplayName("Nao deveria cadastrar sala com nome ja cadastrado")
     void cenario1() {
         given(dados.capacidade()).willReturn(10);
-        given(repository.existsByNome(dados.nome())).willReturn(true);
+        given(repository.nomeJaCadastrado(dados.nome())).willReturn(true);
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Nome já utilizado em outra sala!", ex.getMessage());
     }
@@ -47,7 +47,7 @@ class CadastrarSalaTest {
     void cenario3() {
         given(dados.capacidade()).willReturn(8);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Sala(dados));
+        verify(repository).cadastrar(new Sala(dados));
     }
 
     @Test
@@ -55,7 +55,7 @@ class CadastrarSalaTest {
     void cenario4() {
         given(dados.capacidade()).willReturn(10);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Sala(dados));
+        verify(repository).cadastrar(new Sala(dados));
     }
 
 }

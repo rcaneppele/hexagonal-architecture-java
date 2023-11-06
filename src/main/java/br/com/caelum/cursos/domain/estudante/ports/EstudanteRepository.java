@@ -6,10 +6,10 @@ import br.com.caelum.cursos.domain.estudante.Estudante;
 
 public interface EstudanteRepository {
 
-    Estudante findByCpf(Cpf cpf);
+    Estudante buscarPorCpf(Cpf cpf);
 
-    void save(Estudante estudante);
+    void cadastrar(Estudante estudante);
 
-    Boolean existsByCpfOrEmail(Cpf cpf, Email email);
+    Boolean CpfOuEmailJaCadastrado(Cpf cpf, Email email);
 
 }

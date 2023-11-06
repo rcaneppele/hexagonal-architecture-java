@@ -38,7 +38,7 @@ class AbrirTurmaTest {
     @Test
     @DisplayName("Nao deveria abrir turma com codigo ja cadastrado")
     void cenario1() {
-        given(repository.existsByCodigo(dados.codigo())).willReturn(true);
+        given(repository.codigoJaCadastrado(dados.codigo())).willReturn(true);
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Código já utilizado em outra turma!", ex.getMessage());
     }
@@ -62,7 +62,7 @@ class AbrirTurmaTest {
     @Test
     @DisplayName("Nao deveria abrir turma com sala ja ocupada por outra turma")
     void cenario4() {
-        given(repository.existsBySalaAndDatas(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(true);
+        given(repository.salaJaOcupadaNoPeriodo(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(true);
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Sala já utilizada por outra turma no mesmo período!", ex.getMessage());
     }
@@ -70,7 +70,7 @@ class AbrirTurmaTest {
     @Test
     @DisplayName("Nao deveria abrir turma com curso que ja atingiu limite de turmas em andamento")
     void cenario5() {
-        given(repository.countEmAndamentoByCurso(dados.curso())).willReturn(4);
+        given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(4);
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Curso atingiu limite de 4 turmas em andamento!", ex.getMessage());
     }
@@ -78,25 +78,25 @@ class AbrirTurmaTest {
     @Test
     @DisplayName("Deveria abrir turma com sala desocupada")
     void cenario6() {
-        given(repository.existsBySalaAndDatas(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(false);
+        given(repository.salaJaOcupadaNoPeriodo(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(false);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Turma(dados));
+        verify(repository).abrir(new Turma(dados));
     }
 
     @Test
     @DisplayName("Deveria abrir turma no limite de turmas")
     void cenario7() {
-        given(repository.countEmAndamentoByCurso(dados.curso())).willReturn(3);
+        given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(3);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Turma(dados));
+        verify(repository).abrir(new Turma(dados));
     }
 
     @Test
     @DisplayName("Deveria abrir turma abaixo do limite de turmas")
     void cenario8() {
-        given(repository.countEmAndamentoByCurso(dados.curso())).willReturn(2);
+        given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(2);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Turma(dados));
+        verify(repository).abrir(new Turma(dados));
     }
 
 }

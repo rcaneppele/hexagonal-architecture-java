@@ -16,7 +16,7 @@ public class AbrirTurma implements AbrirTurmaPort {
 
     public void execute(DadosParaAbrirTurma dados) {
         validarTurma(dados);
-        repository.save(new Turma(dados));
+        repository.abrir(new Turma(dados));
     }
 
     private void validarTurma(DadosParaAbrirTurma dados) {
@@ -37,21 +37,21 @@ public class AbrirTurma implements AbrirTurmaPort {
     }
 
     private void validarCodigo(DadosParaAbrirTurma dados) {
-        var turmaJaCadastrada = repository.existsByCodigo(dados.codigo());
+        var turmaJaCadastrada = repository.codigoJaCadastrado(dados.codigo());
         if (turmaJaCadastrada) {
             throw new RegraDeNegocioException("Cadastro não realizado: Código já utilizado em outra turma!");
         }
     }
 
     private void validarSala(DadosParaAbrirTurma dados) {
-        var salaOcupada = repository.existsBySalaAndDatas(dados.sala(), dados.dataInicio(), dados.dataFim());
+        var salaOcupada = repository.salaJaOcupadaNoPeriodo(dados.sala(), dados.dataInicio(), dados.dataFim());
         if (salaOcupada) {
             throw new RegraDeNegocioException("Cadastro não realizado: Sala já utilizada por outra turma no mesmo período!");
         }
     }
 
     private void validarLimiteDeTurmas(DadosParaAbrirTurma dados) {
-        var turmasEmAndamento = repository.countEmAndamentoByCurso(dados.curso());
+        var turmasEmAndamento = repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso());
         if (turmasEmAndamento == 4) {
             throw new RegraDeNegocioException("Cadastro não realizado: Curso atingiu limite de 4 turmas em andamento!");
         }

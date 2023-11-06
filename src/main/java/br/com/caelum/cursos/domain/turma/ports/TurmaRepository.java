@@ -8,14 +8,14 @@ import java.time.LocalDate;
 
 public interface TurmaRepository {
 
-    Turma findByCodigo(String codigo);
+    Turma buscarPorCodigo(String codigo);
 
-    void save(Turma turma);
+    void abrir(Turma turma);
 
-    Boolean existsByCodigo(String codigo);
+    Boolean codigoJaCadastrado(String codigo);
 
-    Boolean existsBySalaAndDatas(Sala sala, LocalDate dataInicio, LocalDate dataFim);
+    Boolean salaJaOcupadaNoPeriodo(Sala sala, LocalDate dataInicio, LocalDate dataFim);
 
-    Integer countEmAndamentoByCurso(Curso curso);
+    Integer quantidadeDeTurmasEmAbertoDoCurso(Curso curso);
 
 }

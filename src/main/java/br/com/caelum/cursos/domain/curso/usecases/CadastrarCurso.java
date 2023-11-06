@@ -14,7 +14,7 @@ public class CadastrarCurso implements CadastrarCursoPort {
 
     public void execute(DadosParaCadastrarCurso dados) {
         validarCurso(dados);
-        repository.save(new Curso(dados));
+        repository.cadastrar(new Curso(dados));
     }
 
     private void validarCurso(DadosParaCadastrarCurso dados) {
@@ -22,7 +22,7 @@ public class CadastrarCurso implements CadastrarCursoPort {
             throw new RegraDeNegocioException("Cadastro não realizado: Duração mínima deve ser de 4 horas!");
         }
 
-        var cursoJaCadastrado = repository.existsByCodigo(dados.codigo());
+        var cursoJaCadastrado = repository.codigoJaCadastrado(dados.codigo());
         if (cursoJaCadastrado) {
             throw new RegraDeNegocioException("Cadastro não realizado: Código já utilizado em outro curso!");
         }

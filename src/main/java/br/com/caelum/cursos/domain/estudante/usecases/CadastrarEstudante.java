@@ -17,7 +17,7 @@ public class CadastrarEstudante implements CadastrarEstudantePort {
 
     public void execute(DadosParaCadastrarEstudante dados) {
         validarEstudante(dados);
-        repository.save(new Estudante(dados));
+        repository.cadastrar(new Estudante(dados));
     }
 
     private void validarEstudante(DadosParaCadastrarEstudante dados) {
@@ -25,7 +25,7 @@ public class CadastrarEstudante implements CadastrarEstudantePort {
             throw new RegraDeNegocioException("Cadastro não realizado: Idade mínima é de 18 anos!");
         }
 
-        var estudanteJaCadastrado = repository.existsByCpfOrEmail(dados.cpf(), dados.email());
+        var estudanteJaCadastrado = repository.CpfOuEmailJaCadastrado(dados.cpf(), dados.email());
         if (estudanteJaCadastrado) {
             throw new RegraDeNegocioException("Cadastro não realizado: CPF ou email já cadastrado para outro estudante!");
         }

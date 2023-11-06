@@ -4,8 +4,8 @@ import br.com.caelum.cursos.domain.curso.Curso;
 
 public interface CursoRepository {
 
-    Boolean existsByCodigo(String codigo);
+    Boolean codigoJaCadastrado(String codigo);
 
-    void save(Curso curso);
+    void cadastrar(Curso curso);
 
 }

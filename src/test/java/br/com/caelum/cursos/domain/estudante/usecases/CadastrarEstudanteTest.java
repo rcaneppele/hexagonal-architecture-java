@@ -31,7 +31,7 @@ class CadastrarEstudanteTest {
     @DisplayName("Nao deveria cadastrar estudante com cpf ou email ja cadastrado")
     void cenario1() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(20));
-        given(repository.existsByCpfOrEmail(dados.cpf(), dados.email())).willReturn(true);
+        given(repository.CpfOuEmailJaCadastrado(dados.cpf(), dados.email())).willReturn(true);
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: CPF ou email já cadastrado para outro estudante!", ex.getMessage());
     }
@@ -49,7 +49,7 @@ class CadastrarEstudanteTest {
     void cenario3() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(18));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Estudante(dados));
+        verify(repository).cadastrar(new Estudante(dados));
     }
 
     @Test
@@ -57,7 +57,7 @@ class CadastrarEstudanteTest {
     void cenario4() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(20));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Estudante(dados));
+        verify(repository).cadastrar(new Estudante(dados));
     }
 
 }

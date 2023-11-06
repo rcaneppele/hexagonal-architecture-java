@@ -31,7 +31,7 @@ class CadastrarCursoTest {
     @DisplayName("Nao deveria cadastrar curso com codigo ja cadastrado")
     void cenario1() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(10));
-        given(repository.existsByCodigo(dados.codigo())).willReturn(true);
+        given(repository.codigoJaCadastrado(dados.codigo())).willReturn(true);
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Código já utilizado em outro curso!", ex.getMessage());
     }
@@ -49,7 +49,7 @@ class CadastrarCursoTest {
     void cenario3() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(4));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Curso(dados));
+        verify(repository).cadastrar(new Curso(dados));
     }
 
     @Test
@@ -57,7 +57,7 @@ class CadastrarCursoTest {
     void cenario4() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(5));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).save(new Curso(dados));
+        verify(repository).cadastrar(new Curso(dados));
     }
 
 }

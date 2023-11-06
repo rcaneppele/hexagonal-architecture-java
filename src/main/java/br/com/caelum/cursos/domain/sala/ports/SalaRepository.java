@@ -4,8 +4,8 @@ import br.com.caelum.cursos.domain.sala.Sala;
 
 public interface SalaRepository {
 
-    Boolean existsByNome(String nome);
+    Boolean nomeJaCadastrado(String nome);
 
-    void save(Sala sala);
+    void cadastrar(Sala sala);
 
 }
