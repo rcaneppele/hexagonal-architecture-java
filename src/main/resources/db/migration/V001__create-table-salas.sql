@@ -1,0 +1,7 @@
+CREATE TABLE salas(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL UNIQUE,
+    capacidade INT NOT NULL,
+
+    PRIMARY KEY(id)
+);
