@@ -3,6 +3,7 @@ package br.com.caelum.cursos.domain.turma;
 import br.com.caelum.cursos.domain.curso.Curso;
 import br.com.caelum.cursos.domain.matricula.Matricula;
 import br.com.caelum.cursos.domain.sala.Sala;
+import br.com.caelum.cursos.domain.turma.ports.DadosParaAbrirTurma;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -32,6 +33,10 @@ public class Turma {
         this.turno = turno;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
+    }
+
+    public Turma(DadosParaAbrirTurma dados) {
+        this(dados.codigo(), dados.curso(), dados.sala(), dados.turno(), dados.dataInicio(), dados.dataFim());
     }
 
     public boolean estaLotada() {
