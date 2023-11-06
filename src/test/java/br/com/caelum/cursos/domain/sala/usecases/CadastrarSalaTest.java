@@ -1,6 +1,7 @@
 package br.com.caelum.cursos.domain.sala.usecases;
 
 import br.com.caelum.cursos.domain.RegraDeNegocioException;
+import br.com.caelum.cursos.domain.sala.Sala;
 import br.com.caelum.cursos.domain.sala.ports.DadosParaCadastrarSala;
 import br.com.caelum.cursos.domain.sala.ports.SalaRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class CadastrarSalaTest {
@@ -45,6 +47,7 @@ class CadastrarSalaTest {
     void cenario3() {
         given(dados.capacidade()).willReturn(8);
         assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(repository).save(new Sala(dados));
     }
 
     @Test
@@ -52,6 +55,7 @@ class CadastrarSalaTest {
     void cenario4() {
         given(dados.capacidade()).willReturn(10);
         assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(repository).save(new Sala(dados));
     }
 
 }
