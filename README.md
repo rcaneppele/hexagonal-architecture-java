@@ -1,6 +1,6 @@
 ## 💻 Sobre o projeto
 
-Projeto em Java com exemplo de utilização da Hexagonal Architecture (https://alistair.cockburn.us/hexagonal-architecture)
+Projeto em Java com exemplo de utilização da Hexagonal Architecture (https://alistair.cockburn.us/hexagonal-architecture/) e da Clean Architecture (https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 Para fins didáticos, os módulos foram separados em pacotes dentro do mesmo projeto.
 
