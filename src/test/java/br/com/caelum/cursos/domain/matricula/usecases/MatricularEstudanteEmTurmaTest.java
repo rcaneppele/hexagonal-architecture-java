@@ -29,10 +29,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class MatricularAlunoEmTurmaTest {
+class MatricularEstudanteEmTurmaTest {
 
     @InjectMocks
-    private MatricularAlunoEmTurma useCase;
+    private MatricularEstudanteEmTurma useCase;
     @Mock
     private TurmaRepository turmaRepository;
     @Mock
@@ -71,7 +71,7 @@ class MatricularAlunoEmTurmaTest {
     }
 
     @Test
-    @DisplayName("Nao deveria matricular aluno em turma lotada")
+    @DisplayName("Nao deveria matricular estudante em turma lotada")
     void cenario1() {
         turma = TurmaBuilder.buildFrom(turma, SalaBuilder.build("Sala 2", 1));
 
@@ -83,7 +83,7 @@ class MatricularAlunoEmTurmaTest {
     }
 
     @Test
-    @DisplayName("Nao deveria matricular aluno em turma com matriculas encerradas")
+    @DisplayName("Nao deveria matricular estudante em turma com matriculas encerradas")
     void cenario2() {
         turma = TurmaBuilder.buildFrom(turma, turma.getDataInicio().minusDays(2), turma.getDataFim());
 
@@ -94,7 +94,7 @@ class MatricularAlunoEmTurmaTest {
     }
 
     @Test
-    @DisplayName("Nao deveria matricular aluno que ja esta matriculado na turma")
+    @DisplayName("Nao deveria matricular estudante que ja esta matriculado na turma")
     void cenario3() {
         estudante.registrarMatricula(new Matricula(turma, estudante));
 
@@ -106,7 +106,7 @@ class MatricularAlunoEmTurmaTest {
     }
 
     @Test
-    @DisplayName("Nao deveria matricular aluno que ja atingiu limite de turmas simultaneas")
+    @DisplayName("Nao deveria matricular estudante que ja atingiu limite de turmas simultaneas")
     void cenario4() {
         var turma2 = TurmaBuilder.build(
                 "T-0002",
@@ -145,7 +145,7 @@ class MatricularAlunoEmTurmaTest {
     }
 
     @Test
-    @DisplayName("Deveria matricular aluno com uma ou nenhuma matricula")
+    @DisplayName("Deveria matricular estudante com uma ou nenhuma matricula")
     void cenario5() {
         given(turmaRepository.findByCodigo(dados.codigoTurma())).willReturn(turma);
         given(estudanteRepository.findByCpf(dados.cpfEstudante())).willReturn(estudante);

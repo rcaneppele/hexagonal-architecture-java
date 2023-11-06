@@ -6,13 +6,13 @@ import br.com.caelum.cursos.domain.estudante.ports.EstudanteRepository;
 import br.com.caelum.cursos.domain.matricula.Matricula;
 import br.com.caelum.cursos.domain.matricula.ports.DadosParaRealizarMatricula;
 import br.com.caelum.cursos.domain.matricula.ports.MatriculaRepository;
-import br.com.caelum.cursos.domain.matricula.ports.MatricularAlunoEmTurmaPort;
+import br.com.caelum.cursos.domain.matricula.ports.MatricularEstudanteEmTurmaPort;
 import br.com.caelum.cursos.domain.turma.Turma;
 import br.com.caelum.cursos.domain.turma.ports.TurmaRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MatricularAlunoEmTurma implements MatricularAlunoEmTurmaPort {
+public class MatricularEstudanteEmTurma implements MatricularEstudanteEmTurmaPort {
 
     private final TurmaRepository turmaRepository;
     private final EstudanteRepository estudanteRepository;
