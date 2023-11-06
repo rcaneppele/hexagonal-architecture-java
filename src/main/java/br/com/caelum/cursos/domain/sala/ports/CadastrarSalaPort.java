@@ -1,7 +1,9 @@
 package br.com.caelum.cursos.domain.sala.ports;
 
+import br.com.caelum.cursos.domain.sala.Sala;
+
 public interface CadastrarSalaPort {
 
-    void execute(DadosParaCadastrarSala dados);
+    Sala execute(DadosParaCadastrarSala dados);
 
 }

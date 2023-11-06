@@ -12,9 +12,9 @@ public class CadastrarSala implements CadastrarSalaPort {
 
     private final SalaRepository repository;
 
-    public void execute(DadosParaCadastrarSala dados) {
+    public Sala execute(DadosParaCadastrarSala dados) {
         validarSala(dados);
-        repository.cadastrar(new Sala(dados));
+        return repository.cadastrar(dados);
     }
 
     private void validarSala(DadosParaCadastrarSala dados) {

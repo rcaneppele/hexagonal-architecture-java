@@ -5,21 +5,23 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @Getter
 @EqualsAndHashCode(of = "nome")
 @ToString(of = {"nome", "capacidade"})
 public class Sala {
 
-    private String nome;
-    private Integer capacidade;
-
-    public Sala(String nome, Integer capacidade) {
-        this.nome = nome;
-        this.capacidade = capacidade;
-    }
+    protected String nome;
+    protected Integer capacidade;
 
     public Sala(DadosParaCadastrarSala dados) {
-        this(dados.nome(), dados.capacidade());
+        Objects.requireNonNull(dados);
+        Objects.requireNonNull(dados.nome());
+        Objects.requireNonNull(dados.capacidade());
+
+        this.nome = dados.nome();
+        this.capacidade = dados.capacidade();
     }
 
 }
