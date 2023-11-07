@@ -1,10 +1,11 @@
 package br.com.caelum.cursos.adapters.web.controller;
 
-import br.com.caelum.cursos.adapters.database.jpa.repository.SalaJpaRepository;
-import br.com.caelum.cursos.adapters.web.dto.DadosParaCadastrarSalaDto;
-import br.com.caelum.cursos.adapters.web.dto.DadosSalaDto;
-import br.com.caelum.cursos.builders.SalaJpaentityBuilder;
-import br.com.caelum.cursos.domain.ports.sala.CadastrarSalaUseCase;
+import br.com.caelum.cursos.adapters.database.jpa.repository.CursoJpaRepository;
+import br.com.caelum.cursos.adapters.web.dto.DadosCursoDto;
+import br.com.caelum.cursos.adapters.web.dto.DadosParaCadastrarCursoDto;
+import br.com.caelum.cursos.builders.CursoJpaEntityBuilder;
+import br.com.caelum.cursos.domain.core.curso.Nivel;
+import br.com.caelum.cursos.domain.ports.curso.CadastrarCursoUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,35 +25,35 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @AutoConfigureJsonTesters
-@WebMvcTest(SalaController.class)
-class SalaControllerTest {
+@WebMvcTest(CursoController.class)
+class CursoControllerTest {
 
-    private static final String URI = "/salas";
+    private static final String URI = "/cursos";
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    private JacksonTester<DadosParaCadastrarSalaDto> jsonRequest;
+    private JacksonTester<DadosParaCadastrarCursoDto> jsonRequest;
 
     @Autowired
-    private JacksonTester<DadosSalaDto> jsonResponse;
+    private JacksonTester<DadosCursoDto> jsonResponse;
 
     @MockBean
-    private CadastrarSalaUseCase useCase;
+    private CadastrarCursoUseCase useCase;
 
     @MockBean
-    private SalaJpaRepository repository;
+    private CursoJpaRepository repository;
 
-    private DadosParaCadastrarSalaDto dadosCadastro;
+    private DadosParaCadastrarCursoDto dadosCadastro;
 
     @BeforeEach
     void setup() {
-        dadosCadastro = new DadosParaCadastrarSalaDto("Sala 01", 10);
+        dadosCadastro = new DadosParaCadastrarCursoDto("xpto", "curso xpto", Nivel.BASICO, 10);
     }
 
     @Test
-    @DisplayName("Nao deveria cadastrar sala com dados invalidos")
+    @DisplayName("Nao deveria cadastrar cruso com dados invalidos")
     void cenario1() throws Exception {
         var response = mvc
                 .perform(post(URI)
@@ -65,10 +66,10 @@ class SalaControllerTest {
     }
 
     @Test
-    @DisplayName("Deveria cadastrar sala com dados validos")
+    @DisplayName("Deveria cadastrar curso com dados validos")
     void cenario2() throws Exception {
-        var entity = SalaJpaentityBuilder.build(dadosCadastro);
-        given(repository.findByNome(dadosCadastro.nome())).willReturn(entity);
+        var entity = CursoJpaEntityBuilder.build(50l, dadosCadastro);
+        given(repository.findByCodigo(dadosCadastro.codigo())).willReturn(entity);
 
         var response = mvc
                 .perform(post(URI)
@@ -78,7 +79,7 @@ class SalaControllerTest {
 
         verify(useCase).execute(dadosCadastro);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.getContentAsString()).isEqualTo(jsonResponse.write(new DadosSalaDto(entity)).getJson());
+        assertThat(response.getContentAsString()).isEqualTo(jsonResponse.write(new DadosCursoDto(entity)).getJson());
         assertThat(response.getHeader("Location")).endsWith(String.format("%s/%d", URI, entity.getId()));
     }
 

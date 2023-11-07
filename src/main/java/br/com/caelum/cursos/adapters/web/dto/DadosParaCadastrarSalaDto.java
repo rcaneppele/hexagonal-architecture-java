@@ -12,14 +12,4 @@ public record DadosParaCadastrarSalaDto(
         @DecimalMin(value = "8", message = "Capacidade mínima da sala deve ser 8!")
         Integer capacidade) implements DadosParaCadastrarSala {
 
-    @Override
-    public String nome() {
-        return nome;
-    }
-
-    @Override
-    public Integer capacidade() {
-        return capacidade;
-    }
-
 }

@@ -26,9 +26,9 @@ public class SalaController {
     @Transactional
     public ResponseEntity<DadosSalaDto> cadastrar(@RequestBody @Valid DadosParaCadastrarSalaDto dados, UriComponentsBuilder uriBuilder) {
         useCase.execute(dados);
-        var salaCadastrada = repository.findByNome(dados.nome());
-        var uri = uriBuilder.path("salas/{id}").buildAndExpand(salaCadastrada.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DadosSalaDto(salaCadastrada));
+        var entity = repository.findByNome(dados.nome());
+        var uri = uriBuilder.path("salas/{id}").buildAndExpand(entity.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosSalaDto(entity));
     }
 
 }
