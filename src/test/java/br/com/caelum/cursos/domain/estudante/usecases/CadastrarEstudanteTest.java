@@ -1,7 +1,6 @@
 package br.com.caelum.cursos.domain.estudante.usecases;
 
 import br.com.caelum.cursos.domain.RegraDeNegocioException;
-import br.com.caelum.cursos.domain.estudante.Estudante;
 import br.com.caelum.cursos.domain.estudante.ports.DadosParaCadastrarEstudante;
 import br.com.caelum.cursos.domain.estudante.ports.EstudanteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +48,7 @@ class CadastrarEstudanteTest {
     void cenario3() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(18));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).cadastrar(new Estudante(dados));
+        verify(repository).cadastrar(dados);
     }
 
     @Test
@@ -57,7 +56,7 @@ class CadastrarEstudanteTest {
     void cenario4() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(20));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).cadastrar(new Estudante(dados));
+        verify(repository).cadastrar(dados);
     }
 
 }

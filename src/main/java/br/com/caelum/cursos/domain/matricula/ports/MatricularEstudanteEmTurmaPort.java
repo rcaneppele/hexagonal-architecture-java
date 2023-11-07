@@ -1,7 +1,9 @@
 package br.com.caelum.cursos.domain.matricula.ports;
 
+import br.com.caelum.cursos.domain.matricula.Matricula;
+
 public interface MatricularEstudanteEmTurmaPort {
 
-    void execute(DadosParaRealizarMatricula dados);
+    Matricula execute(DadosParaRealizarMatricula dados);
 
 }

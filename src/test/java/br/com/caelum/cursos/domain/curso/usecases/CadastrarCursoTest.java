@@ -1,7 +1,6 @@
 package br.com.caelum.cursos.domain.curso.usecases;
 
 import br.com.caelum.cursos.domain.RegraDeNegocioException;
-import br.com.caelum.cursos.domain.curso.Curso;
 import br.com.caelum.cursos.domain.curso.ports.CursoRepository;
 import br.com.caelum.cursos.domain.curso.ports.DadosParaCadastrarCurso;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +48,7 @@ class CadastrarCursoTest {
     void cenario3() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(4));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).cadastrar(new Curso(dados));
+        verify(repository).cadastrar(dados);
     }
 
     @Test
@@ -57,7 +56,7 @@ class CadastrarCursoTest {
     void cenario4() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(5));
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).cadastrar(new Curso(dados));
+        verify(repository).cadastrar(dados);
     }
 
 }

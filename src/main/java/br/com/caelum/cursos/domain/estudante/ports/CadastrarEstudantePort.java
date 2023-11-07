@@ -1,7 +1,9 @@
 package br.com.caelum.cursos.domain.estudante.ports;
 
+import br.com.caelum.cursos.domain.estudante.Estudante;
+
 public interface CadastrarEstudantePort {
 
-    void execute(DadosParaCadastrarEstudante dados);
+    Estudante execute(DadosParaCadastrarEstudante dados);
 
 }

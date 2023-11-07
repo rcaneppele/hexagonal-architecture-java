@@ -18,15 +18,14 @@ public class MatricularEstudanteEmTurma implements MatricularEstudanteEmTurmaPor
     private final EstudanteRepository estudanteRepository;
     private final MatriculaRepository matriculaRepository;
 
-    public void execute(DadosParaRealizarMatricula dados) {
+    public Matricula execute(DadosParaRealizarMatricula dados) {
         var turma = turmaRepository.buscarPorCodigo(dados.codigoTurma());
         validarTurma(turma);
 
         var estudante = estudanteRepository.buscarPorCpf(dados.cpfEstudante());
         validarEstudante(estudante, turma);
 
-        var matricula = new Matricula(turma, estudante);
-        matriculaRepository.registrar(matricula);
+        return matriculaRepository.registrar(dados);
     }
 
     private void validarTurma(Turma turma) {

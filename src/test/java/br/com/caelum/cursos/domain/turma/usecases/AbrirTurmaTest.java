@@ -1,7 +1,6 @@
 package br.com.caelum.cursos.domain.turma.usecases;
 
 import br.com.caelum.cursos.domain.RegraDeNegocioException;
-import br.com.caelum.cursos.domain.turma.Turma;
 import br.com.caelum.cursos.domain.turma.ports.DadosParaAbrirTurma;
 import br.com.caelum.cursos.domain.turma.ports.TurmaRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +79,7 @@ class AbrirTurmaTest {
     void cenario6() {
         given(repository.salaJaOcupadaNoPeriodo(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(false);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).abrir(new Turma(dados));
+        verify(repository).abrir(dados);
     }
 
     @Test
@@ -88,7 +87,7 @@ class AbrirTurmaTest {
     void cenario7() {
         given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(3);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).abrir(new Turma(dados));
+        verify(repository).abrir(dados);
     }
 
     @Test
@@ -96,7 +95,7 @@ class AbrirTurmaTest {
     void cenario8() {
         given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(2);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).abrir(new Turma(dados));
+        verify(repository).abrir(dados);
     }
 
 }

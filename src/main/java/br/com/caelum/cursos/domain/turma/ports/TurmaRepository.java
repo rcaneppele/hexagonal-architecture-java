@@ -10,7 +10,7 @@ public interface TurmaRepository {
 
     Turma buscarPorCodigo(String codigo);
 
-    void abrir(Turma turma);
+    Turma abrir(DadosParaAbrirTurma dados);
 
     Boolean codigoJaCadastrado(String codigo);
 

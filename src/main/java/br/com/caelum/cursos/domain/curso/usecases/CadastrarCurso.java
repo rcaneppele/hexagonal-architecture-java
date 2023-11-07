@@ -12,9 +12,9 @@ public class CadastrarCurso implements CadastrarCursoPort {
 
     private final CursoRepository repository;
 
-    public void execute(DadosParaCadastrarCurso dados) {
+    public Curso execute(DadosParaCadastrarCurso dados) {
         validarCurso(dados);
-        repository.cadastrar(new Curso(dados));
+        return repository.cadastrar(dados);
     }
 
     private void validarCurso(DadosParaCadastrarCurso dados) {

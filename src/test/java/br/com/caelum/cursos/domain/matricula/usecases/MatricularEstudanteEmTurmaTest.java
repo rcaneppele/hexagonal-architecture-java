@@ -26,7 +26,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MatricularEstudanteEmTurmaTest {
@@ -68,15 +68,20 @@ class MatricularEstudanteEmTurmaTest {
                 SalaBuilder.build(
                         "Sala 01",
                         5));
+
+        lenient().when(dados.codigoTurma()).thenReturn(turma.getCodigo());
+        lenient().when(dados.cpfEstudante()).thenReturn(estudante.getCpf());
+        lenient().when(turmaRepository.buscarPorCodigo(dados.codigoTurma())).thenReturn(turma);
+        lenient().when(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).thenReturn(estudante);
     }
 
     @Test
     @DisplayName("Nao deveria matricular estudante em turma lotada")
     void cenario1() {
-        turma = TurmaBuilder.buildFrom(turma, SalaBuilder.build("Sala 2", 1));
-
-        turma.registrarMatricula(new Matricula(turma, estudante));
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        var outraTurma = TurmaBuilder.buildFrom(turma, SalaBuilder.build("Sala 2", 1));
+        outraTurma.registrarMatricula(new Matricula(outraTurma, estudante));
+        given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(outraTurma);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: turma está lotada!", ex.getMessage());
@@ -85,9 +90,10 @@ class MatricularEstudanteEmTurmaTest {
     @Test
     @DisplayName("Nao deveria matricular estudante em turma com matriculas encerradas")
     void cenario2() {
-        turma = TurmaBuilder.buildFrom(turma, turma.getDataInicio().minusDays(2), turma.getDataFim());
+        var outraTurma = TurmaBuilder.buildFrom(turma, turma.getDataInicio().minusDays(2), turma.getDataFim());
 
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
+        given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
+        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(outraTurma);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: turma com período de matriculas encerado!", ex.getMessage());
@@ -97,9 +103,6 @@ class MatricularEstudanteEmTurmaTest {
     @DisplayName("Nao deveria matricular estudante que ja esta matriculado na turma")
     void cenario3() {
         estudante.registrarMatricula(new Matricula(turma, estudante));
-
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: estudante já possui matricula para esta turma!", ex.getMessage());
@@ -137,8 +140,8 @@ class MatricularEstudanteEmTurmaTest {
         estudante.registrarMatricula(new Matricula(turma, estudante));
         estudante.registrarMatricula(new Matricula(turma2, estudante));
 
+        given(dados.codigoTurma()).willReturn(turma3.getCodigo());
         given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma3);
-        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
 
         Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: estudante com limite de turmas em andamento!", ex.getMessage());
@@ -147,11 +150,7 @@ class MatricularEstudanteEmTurmaTest {
     @Test
     @DisplayName("Deveria matricular estudante com uma ou nenhuma matricula")
     void cenario5() {
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
-
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
 
         var turma2 = TurmaBuilder.build(
                 "T-0002",
@@ -166,41 +165,41 @@ class MatricularEstudanteEmTurmaTest {
                         "Sala 01",
                         2));
 
+        given(dados.codigoTurma()).willReturn(turma2.getCodigo());
         given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma2);
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(new Matricula(turma2, estudante));
+        verify(matriculaRepository, times(2)).registrar(dados);
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas no dia anterior ao inicio da turma")
     void cenario6() {
-        turma = TurmaBuilder.buildFrom(turma, LocalDate.now().plusDays(1), turma.getDataFim());
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
+        var outraTurma = TurmaBuilder.buildFrom(turma, LocalDate.now().plusDays(1), turma.getDataFim());
+
+        given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
+        given(turmaRepository.buscarPorCodigo(outraTurma.getCodigo())).willReturn(outraTurma);
 
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(dados);
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas no dia do inicio da turma")
     void cenario7() {
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
-
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(dados);
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas uma dia apos o inicio da turma")
     void cenario8() {
-        turma = TurmaBuilder.buildFrom(turma, LocalDate.now().minusDays(1), turma.getDataFim());
-        given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma);
-        given(estudanteRepository.buscarPorCpf(dados.cpfEstudante())).willReturn(estudante);
+        var outraTurma = TurmaBuilder.buildFrom(turma, LocalDate.now().minusDays(1), turma.getDataFim());
+
+        given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
+        given(turmaRepository.buscarPorCodigo(outraTurma.getCodigo())).willReturn(outraTurma);
 
         assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(new Matricula(turma, estudante));
+        verify(matriculaRepository).registrar(dados);
     }
 
 }
