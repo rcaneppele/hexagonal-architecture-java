@@ -38,7 +38,7 @@ class AbrirTurmaTest {
     @DisplayName("Nao deveria abrir turma com codigo ja cadastrado")
     void cenario1() {
         given(repository.codigoJaCadastrado(dados.codigo())).willReturn(true);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Código já utilizado em outra turma!", ex.getMessage());
     }
 
@@ -46,7 +46,7 @@ class AbrirTurmaTest {
     @DisplayName("Nao deveria abrir turma com data de inicio menor do que hoje")
     void cenario2() {
         given(dados.dataInicio()).willReturn(LocalDate.now().minusDays(1));
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Data de início não pode ser anterior a hoje!", ex.getMessage());
     }
 
@@ -54,7 +54,7 @@ class AbrirTurmaTest {
     @DisplayName("Nao deveria abrir turma com data de fim menor do que data de inicio")
     void cenario3() {
         given(dados.dataFim()).willReturn(LocalDate.now().minusDays(1));
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Data fim deve ser posterior a data de início!", ex.getMessage());
     }
 
@@ -62,7 +62,7 @@ class AbrirTurmaTest {
     @DisplayName("Nao deveria abrir turma com sala ja ocupada por outra turma")
     void cenario4() {
         given(repository.salaJaOcupadaNoPeriodo(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(true);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Sala já utilizada por outra turma no mesmo período!", ex.getMessage());
     }
 
@@ -70,7 +70,7 @@ class AbrirTurmaTest {
     @DisplayName("Nao deveria abrir turma com curso que ja atingiu limite de turmas em andamento")
     void cenario5() {
         given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(4);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Curso atingiu limite de 4 turmas em andamento!", ex.getMessage());
     }
 

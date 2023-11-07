@@ -31,7 +31,7 @@ class CadastrarCursoTest {
     void cenario1() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(10));
         given(repository.codigoJaCadastrado(dados.codigo())).willReturn(true);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Código já utilizado em outro curso!", ex.getMessage());
     }
 
@@ -39,7 +39,7 @@ class CadastrarCursoTest {
     @DisplayName("Nao deveria cadastrar curso com carga horaria menor do que 4")
     void cenario2() {
         given(dados.duracaoEmHoras()).willReturn(Duration.ofHours(2));
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Duração mínima deve ser de 4 horas!", ex.getMessage());
     }
 

@@ -83,7 +83,7 @@ class MatricularEstudanteEmTurmaTest {
         given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
         given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(outraTurma);
 
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: turma está lotada!", ex.getMessage());
     }
 
@@ -95,7 +95,7 @@ class MatricularEstudanteEmTurmaTest {
         given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
         given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(outraTurma);
 
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: turma com período de matriculas encerado!", ex.getMessage());
     }
 
@@ -104,7 +104,7 @@ class MatricularEstudanteEmTurmaTest {
     void cenario3() {
         estudante.registrarMatricula(new Matricula(turma, estudante));
 
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: estudante já possui matricula para esta turma!", ex.getMessage());
     }
 
@@ -143,7 +143,7 @@ class MatricularEstudanteEmTurmaTest {
         given(dados.codigoTurma()).willReturn(turma3.getCodigo());
         given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma3);
 
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Matricula não realizada: estudante com limite de turmas em andamento!", ex.getMessage());
     }
 

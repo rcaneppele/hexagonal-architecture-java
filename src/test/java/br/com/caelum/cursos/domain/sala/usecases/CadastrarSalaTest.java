@@ -29,7 +29,7 @@ class CadastrarSalaTest {
     void cenario1() {
         given(dados.capacidade()).willReturn(10);
         given(repository.nomeJaCadastrado(dados.nome())).willReturn(true);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Nome já utilizado em outra sala!", ex.getMessage());
     }
 
@@ -37,7 +37,7 @@ class CadastrarSalaTest {
     @DisplayName("Nao deveria cadastrar sala com capacidade menor do que 8")
     void cenario2() {
         given(dados.capacidade()).willReturn(5);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Capacidade mínima deve ser 8!", ex.getMessage());
     }
 

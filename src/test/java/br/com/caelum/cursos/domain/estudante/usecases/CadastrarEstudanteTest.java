@@ -31,7 +31,7 @@ class CadastrarEstudanteTest {
     void cenario1() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(20));
         given(repository.CpfOuEmailJaCadastrado(dados.cpf(), dados.email())).willReturn(true);
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: CPF ou email já cadastrado para outro estudante!", ex.getMessage());
     }
 
@@ -39,7 +39,7 @@ class CadastrarEstudanteTest {
     @DisplayName("Nao deveria cadastrar estudante menor de idade")
     void cenario2() {
         given(dados.dataDeNascimento()).willReturn(LocalDate.now().minusYears(15));
-        Exception ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
+        var ex = assertThrows(RegraDeNegocioException.class, () -> useCase.execute(dados));
         assertEquals("Cadastro não realizado: Idade mínima é de 18 anos!", ex.getMessage());
     }
 
