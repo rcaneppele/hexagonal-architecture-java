@@ -4,20 +4,44 @@ import br.com.caelum.cursos.domain.curso.Curso;
 import br.com.caelum.cursos.domain.sala.Sala;
 import br.com.caelum.cursos.domain.turma.Turma;
 import br.com.caelum.cursos.domain.turma.Turno;
+import br.com.caelum.cursos.domain.turma.ports.DadosParaAbrirTurma;
 
 import java.time.LocalDate;
 
 public class TurmaBuilder {
 
     public static Turma build(String codigo, LocalDate dataInicio, LocalDate dataFim, Turno turno, Curso curso, Sala sala) {
-        return new Turma(
-                codigo,
-                curso,
-                sala,
-                turno,
-                dataInicio,
-                dataFim
-        );
+        return new Turma(new DadosParaAbrirTurma() {
+            @Override
+            public String codigo() {
+                return codigo;
+            }
+
+            @Override
+            public Curso curso() {
+                return curso;
+            }
+
+            @Override
+            public Sala sala() {
+                return sala;
+            }
+
+            @Override
+            public Turno turno() {
+                return turno;
+            }
+
+            @Override
+            public LocalDate dataInicio() {
+                return dataInicio;
+            }
+
+            @Override
+            public LocalDate dataFim() {
+                return dataFim;
+            }
+        });
     }
 
     public static Turma buildFrom(Turma modelo, LocalDate dataInicio, LocalDate dataFim) {

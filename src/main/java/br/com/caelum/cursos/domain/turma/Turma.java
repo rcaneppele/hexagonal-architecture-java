@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -26,17 +27,21 @@ public class Turma {
 
     private Set<Matricula> matriculas = new HashSet<>();
 
-    public Turma(String codigo, Curso curso, Sala sala, Turno turno, LocalDate dataInicio, LocalDate dataFim) {
-        this.codigo = codigo;
-        this.curso = curso;
-        this.sala = sala;
-        this.turno = turno;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-    }
-
     public Turma(DadosParaAbrirTurma dados) {
-        this(dados.codigo(), dados.curso(), dados.sala(), dados.turno(), dados.dataInicio(), dados.dataFim());
+        Objects.requireNonNull(dados, "Dados para criação da turma são obrigatórios!");
+        Objects.requireNonNull(dados.codigo(), "Código da turma é obrigatório!");
+        Objects.requireNonNull(dados.curso(), "Curso da turma é obrigatório!");
+        Objects.requireNonNull(dados.sala(), "Sala da turma é obrigatória!");
+        Objects.requireNonNull(dados.turno(), "Turno da turma é obrigatório!");
+        Objects.requireNonNull(dados.dataInicio(), "Data de início da turma é obrigatória!");
+        Objects.requireNonNull(dados.dataFim(), "Data fim da turma é obrigatória!");
+
+        this.codigo = dados.codigo();
+        this.curso = dados.curso();
+        this.sala = dados.sala();
+        this.turno = dados.turno();
+        this.dataInicio = dados.dataInicio();
+        this.dataFim = dados.dataFim();
     }
 
     public boolean estaLotada() {

@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -24,16 +25,19 @@ public class Estudante {
 
     private Set<Matricula> matriculas = new HashSet<>();
 
-    public Estudante(String nome, Cpf cpf, LocalDate dataDeNascimento, Email email, Telefone celular) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dataDeNascimento = dataDeNascimento;
-        this.email = email;
-        this.celular = celular;
-    }
-
     public Estudante(DadosParaCadastrarEstudante dados) {
-        this(dados.nome(), dados.cpf(), dados.dataDeNascimento(), dados.email(), dados.celular());
+        Objects.requireNonNull(dados, "Dados para criação do estudante são obrigatórios!");
+        Objects.requireNonNull(dados.nome(), "Nome do estudante é obrigatório!");
+        Objects.requireNonNull(dados.cpf(), "CPF do estudante é obrigatório!");
+        Objects.requireNonNull(dados.dataDeNascimento(), "Data de nascimento do estudante é obrigatória!");
+        Objects.requireNonNull(dados.email(), "Email do estudante é obrigatório!");
+        Objects.requireNonNull(dados.celular(), "Celular do estudante é obrigatório!");
+
+        this.nome = dados.nome();
+        this.cpf = dados.cpf();
+        this.dataDeNascimento = dados.dataDeNascimento();
+        this.email = dados.email();
+        this.celular = dados.celular();
     }
 
     public boolean estaComLimiteDeTurmasEmAndamento() {

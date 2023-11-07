@@ -16,9 +16,9 @@ public class Sala {
     protected Integer capacidade;
 
     public Sala(DadosParaCadastrarSala dados) {
-        Objects.requireNonNull(dados);
-        Objects.requireNonNull(dados.nome());
-        Objects.requireNonNull(dados.capacidade());
+        Objects.requireNonNull(dados, "Dados para criação da sala são obrigatórios!");
+        Objects.requireNonNull(dados.nome(), "Nome da sala é obrigatório!");
+        Objects.requireNonNull(dados.capacidade(), "Capacidade da sala é obrigatória!");
 
         this.nome = dados.nome();
         this.capacidade = dados.capacidade();
