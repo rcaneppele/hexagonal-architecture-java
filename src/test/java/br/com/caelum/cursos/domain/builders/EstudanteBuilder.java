@@ -1,10 +1,10 @@
 package br.com.caelum.cursos.domain.builders;
 
-import br.com.caelum.cursos.domain.estudante.Cpf;
-import br.com.caelum.cursos.domain.estudante.Email;
-import br.com.caelum.cursos.domain.estudante.Estudante;
-import br.com.caelum.cursos.domain.estudante.Telefone;
-import br.com.caelum.cursos.domain.estudante.ports.DadosParaCadastrarEstudante;
+import br.com.caelum.cursos.domain.core.estudante.Cpf;
+import br.com.caelum.cursos.domain.core.estudante.Email;
+import br.com.caelum.cursos.domain.core.estudante.Estudante;
+import br.com.caelum.cursos.domain.core.estudante.Telefone;
+import br.com.caelum.cursos.domain.ports.estudante.DadosParaCadastrarEstudante;
 
 import java.time.LocalDate;
 

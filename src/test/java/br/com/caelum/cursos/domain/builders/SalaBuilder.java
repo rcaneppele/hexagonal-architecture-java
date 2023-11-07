@@ -1,7 +1,7 @@
 package br.com.caelum.cursos.domain.builders;
 
-import br.com.caelum.cursos.domain.sala.Sala;
-import br.com.caelum.cursos.domain.sala.ports.DadosParaCadastrarSala;
+import br.com.caelum.cursos.domain.core.sala.Sala;
+import br.com.caelum.cursos.domain.ports.sala.DadosParaCadastrarSala;
 
 public class SalaBuilder {
 

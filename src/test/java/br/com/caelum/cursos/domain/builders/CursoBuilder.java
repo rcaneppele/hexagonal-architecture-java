@@ -1,8 +1,8 @@
 package br.com.caelum.cursos.domain.builders;
 
-import br.com.caelum.cursos.domain.curso.Curso;
-import br.com.caelum.cursos.domain.curso.Nivel;
-import br.com.caelum.cursos.domain.curso.ports.DadosParaCadastrarCurso;
+import br.com.caelum.cursos.domain.core.curso.Curso;
+import br.com.caelum.cursos.domain.core.curso.Nivel;
+import br.com.caelum.cursos.domain.ports.curso.DadosParaCadastrarCurso;
 
 import java.time.Duration;
 

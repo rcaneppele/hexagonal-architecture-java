@@ -1,6 +1,6 @@
 package br.com.caelum.cursos.adapters.database.jpa.entity;
 
-import br.com.caelum.cursos.domain.sala.Sala;
+import br.com.caelum.cursos.domain.core.sala.Sala;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

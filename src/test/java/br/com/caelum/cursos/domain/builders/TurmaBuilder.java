@@ -1,10 +1,10 @@
 package br.com.caelum.cursos.domain.builders;
 
-import br.com.caelum.cursos.domain.curso.Curso;
-import br.com.caelum.cursos.domain.sala.Sala;
-import br.com.caelum.cursos.domain.turma.Turma;
-import br.com.caelum.cursos.domain.turma.Turno;
-import br.com.caelum.cursos.domain.turma.ports.DadosParaAbrirTurma;
+import br.com.caelum.cursos.domain.core.curso.Curso;
+import br.com.caelum.cursos.domain.core.sala.Sala;
+import br.com.caelum.cursos.domain.core.turma.Turma;
+import br.com.caelum.cursos.domain.core.turma.Turno;
+import br.com.caelum.cursos.domain.ports.turma.DadosParaAbrirTurma;
 
 import java.time.LocalDate;
 

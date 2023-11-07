@@ -3,7 +3,7 @@ package br.com.caelum.cursos.adapters.web.controller;
 import br.com.caelum.cursos.adapters.database.jpa.repository.SalaJpaRepository;
 import br.com.caelum.cursos.adapters.web.dto.DadosParaCadastrarSalaDto;
 import br.com.caelum.cursos.adapters.web.dto.DadosSalaDto;
-import br.com.caelum.cursos.domain.sala.ports.CadastrarSalaPort;
+import br.com.caelum.cursos.domain.ports.sala.CadastrarSalaUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class SalaController {
 
-    private final CadastrarSalaPort port;
+    private final CadastrarSalaUseCase useCase;
     private final SalaJpaRepository repository;
 
     @PostMapping
     @Transactional
     public ResponseEntity<DadosSalaDto> cadastrar(@RequestBody @Valid DadosParaCadastrarSalaDto dados, UriComponentsBuilder uriBuilder) {
-        port.execute(dados);
+        useCase.execute(dados);
         var salaCadastrada = repository.findByNome(dados.nome());
         var uri = uriBuilder.path("salas/{id}").buildAndExpand(salaCadastrada.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosSalaDto(salaCadastrada));

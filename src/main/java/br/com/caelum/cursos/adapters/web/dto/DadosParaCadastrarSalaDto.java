@@ -1,6 +1,6 @@
 package br.com.caelum.cursos.adapters.web.dto;
 
-import br.com.caelum.cursos.domain.sala.ports.DadosParaCadastrarSala;
+import br.com.caelum.cursos.domain.ports.sala.DadosParaCadastrarSala;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
