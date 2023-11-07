@@ -8,7 +8,7 @@ public interface EstudanteRepository {
 
     Estudante buscarPorCpf(Cpf cpf);
 
-    Estudante cadastrar(DadosParaCadastrarEstudante dados);
+    void cadastrar(Estudante estudante);
 
     Boolean CpfOuEmailJaCadastrado(Cpf cpf, Email email);
 

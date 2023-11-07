@@ -16,7 +16,9 @@ public class AbrirTurma implements AbrirTurmaPort {
 
     public Turma execute(DadosParaAbrirTurma dados) {
         validarTurma(dados);
-        return repository.abrir(dados);
+        var turma = new Turma(dados);
+        repository.abrir(turma);
+        return turma;
     }
 
     private void validarTurma(DadosParaAbrirTurma dados) {

@@ -17,7 +17,9 @@ public class CadastrarEstudante implements CadastrarEstudantePort {
 
     public Estudante execute(DadosParaCadastrarEstudante dados) {
         validarEstudante(dados);
-        return repository.cadastrar(dados);
+        var estudante = new Estudante(dados);
+        repository.cadastrar(estudante);
+        return estudante;
     }
 
     private void validarEstudante(DadosParaCadastrarEstudante dados) {

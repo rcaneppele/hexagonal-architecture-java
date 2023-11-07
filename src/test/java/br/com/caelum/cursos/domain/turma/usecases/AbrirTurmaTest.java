@@ -1,6 +1,9 @@
 package br.com.caelum.cursos.domain.turma.usecases;
 
 import br.com.caelum.cursos.domain.RegraDeNegocioException;
+import br.com.caelum.cursos.domain.builders.CursoBuilder;
+import br.com.caelum.cursos.domain.builders.SalaBuilder;
+import br.com.caelum.cursos.domain.turma.Turno;
 import br.com.caelum.cursos.domain.turma.ports.DadosParaAbrirTurma;
 import br.com.caelum.cursos.domain.turma.ports.TurmaRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +33,12 @@ class AbrirTurmaTest {
 
     @BeforeEach
     void setup() {
-        given(dados.dataInicio()).willReturn(LocalDate.now());
-        lenient().when(dados.dataFim()).thenReturn(LocalDate.now().plusDays(1));
+        lenient().when(dados.codigo()).thenReturn("XPTO-001");
+        lenient().when(dados.dataInicio()).thenReturn(LocalDate.now());
+        lenient().when(dados.dataFim()).thenReturn(LocalDate.now().plusDays(5));
+        lenient().when(dados.turno()).thenReturn(Turno.INTEGRAL);
+        lenient().when(dados.sala()).thenReturn(SalaBuilder.build("Sala 01", 10));
+        lenient().when(dados.curso()).thenReturn(CursoBuilder.build("xpto", "curso xpto", 40));
     }
 
     @Test
@@ -78,24 +85,24 @@ class AbrirTurmaTest {
     @DisplayName("Deveria abrir turma com sala desocupada")
     void cenario6() {
         given(repository.salaJaOcupadaNoPeriodo(dados.sala(), dados.dataInicio(), dados.dataFim())).willReturn(false);
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).abrir(dados);
+        var turma = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(repository).abrir(turma);
     }
 
     @Test
     @DisplayName("Deveria abrir turma no limite de turmas")
     void cenario7() {
         given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(3);
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).abrir(dados);
+        var turma = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(repository).abrir(turma);
     }
 
     @Test
     @DisplayName("Deveria abrir turma abaixo do limite de turmas")
     void cenario8() {
         given(repository.quantidadeDeTurmasEmAbertoDoCurso(dados.curso())).willReturn(2);
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(repository).abrir(dados);
+        var turma = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(repository).abrir(turma);
     }
 
 }

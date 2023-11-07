@@ -1,6 +1,6 @@
 package br.com.caelum.cursos.adapters.database.jpa.entity;
 
-import br.com.caelum.cursos.domain.sala.ports.DadosParaCadastrarSala;
+import br.com.caelum.cursos.domain.sala.Sala;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,9 +19,9 @@ public class SalaJpaEntity {
     private String nome;
     private Integer capacidade;
 
-    public SalaJpaEntity(DadosParaCadastrarSala dados) {
-        this.nome = dados.nome();
-        this.capacidade = dados.capacidade();
+    public SalaJpaEntity(Sala sala) {
+        this.nome = sala.getNome();
+        this.capacidade = sala.getCapacidade();
     }
 
 }

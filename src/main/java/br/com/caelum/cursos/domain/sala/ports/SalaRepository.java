@@ -6,6 +6,6 @@ public interface SalaRepository {
 
     Boolean nomeJaCadastrado(String nome);
 
-    Sala cadastrar(DadosParaCadastrarSala dados);
+    void cadastrar(Sala sala);
 
 }

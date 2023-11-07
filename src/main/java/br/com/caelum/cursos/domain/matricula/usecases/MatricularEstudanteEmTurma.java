@@ -25,7 +25,9 @@ public class MatricularEstudanteEmTurma implements MatricularEstudanteEmTurmaPor
         var estudante = estudanteRepository.buscarPorCpf(dados.cpfEstudante());
         validarEstudante(estudante, turma);
 
-        return matriculaRepository.registrar(dados);
+        var matricula = new Matricula(turma, estudante);
+        matriculaRepository.registrar(matricula);
+        return matricula;
     }
 
     private void validarTurma(Turma turma) {

@@ -26,7 +26,8 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class MatricularEstudanteEmTurmaTest {
@@ -150,7 +151,8 @@ class MatricularEstudanteEmTurmaTest {
     @Test
     @DisplayName("Deveria matricular estudante com uma ou nenhuma matricula")
     void cenario5() {
-        assertDoesNotThrow(() -> useCase.execute(dados));
+        var matricula1 = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(matriculaRepository).registrar(matricula1);
 
         var turma2 = TurmaBuilder.build(
                 "T-0002",
@@ -167,8 +169,8 @@ class MatricularEstudanteEmTurmaTest {
 
         given(dados.codigoTurma()).willReturn(turma2.getCodigo());
         given(turmaRepository.buscarPorCodigo(dados.codigoTurma())).willReturn(turma2);
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository, times(2)).registrar(dados);
+        var matricula2 = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(matriculaRepository).registrar(matricula2);
     }
 
     @Test
@@ -179,15 +181,15 @@ class MatricularEstudanteEmTurmaTest {
         given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
         given(turmaRepository.buscarPorCodigo(outraTurma.getCodigo())).willReturn(outraTurma);
 
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(dados);
+        var matricula = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(matriculaRepository).registrar(matricula);
     }
 
     @Test
     @DisplayName("Deveria aceitar matriculas no dia do inicio da turma")
     void cenario7() {
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(dados);
+        var matricula = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(matriculaRepository).registrar(matricula);
     }
 
     @Test
@@ -198,8 +200,8 @@ class MatricularEstudanteEmTurmaTest {
         given(dados.codigoTurma()).willReturn(outraTurma.getCodigo());
         given(turmaRepository.buscarPorCodigo(outraTurma.getCodigo())).willReturn(outraTurma);
 
-        assertDoesNotThrow(() -> useCase.execute(dados));
-        verify(matriculaRepository).registrar(dados);
+        var matricula = assertDoesNotThrow(() -> useCase.execute(dados));
+        verify(matriculaRepository).registrar(matricula);
     }
 
 }

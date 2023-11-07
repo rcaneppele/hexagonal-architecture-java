@@ -6,6 +6,6 @@ public interface CursoRepository {
 
     Boolean codigoJaCadastrado(String codigo);
 
-    Curso cadastrar(DadosParaCadastrarCurso dados);
+    void cadastrar(Curso curso);
 
 }

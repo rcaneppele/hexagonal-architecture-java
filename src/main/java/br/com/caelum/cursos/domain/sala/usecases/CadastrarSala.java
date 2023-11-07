@@ -14,7 +14,9 @@ public class CadastrarSala implements CadastrarSalaPort {
 
     public Sala execute(DadosParaCadastrarSala dados) {
         validarSala(dados);
-        return repository.cadastrar(dados);
+        var sala = new Sala(dados);
+        repository.cadastrar(sala);
+        return sala;
     }
 
     private void validarSala(DadosParaCadastrarSala dados) {
