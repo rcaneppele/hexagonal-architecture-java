@@ -19,9 +19,14 @@ public class SalaJpaEntity {
     private String nome;
     private Integer capacidade;
 
+    public SalaJpaEntity(Long id, String nome, Integer capacidade) {
+        this.id = id;
+        this.nome = nome;
+        this.capacidade = capacidade;
+    }
+
     public SalaJpaEntity(Sala sala) {
-        this.nome = sala.getNome();
-        this.capacidade = sala.getCapacidade();
+        this(null, sala.getNome(), sala.getCapacidade());
     }
 
 }

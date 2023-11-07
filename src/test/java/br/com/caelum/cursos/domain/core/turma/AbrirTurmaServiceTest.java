@@ -1,7 +1,7 @@
 package br.com.caelum.cursos.domain.core.turma;
 
-import br.com.caelum.cursos.domain.builders.CursoBuilder;
-import br.com.caelum.cursos.domain.builders.SalaBuilder;
+import br.com.caelum.cursos.builders.CursoBuilder;
+import br.com.caelum.cursos.builders.SalaBuilder;
 import br.com.caelum.cursos.domain.core.RegraDeNegocioException;
 import br.com.caelum.cursos.domain.ports.turma.DadosParaAbrirTurma;
 import br.com.caelum.cursos.domain.ports.turma.TurmaRepository;

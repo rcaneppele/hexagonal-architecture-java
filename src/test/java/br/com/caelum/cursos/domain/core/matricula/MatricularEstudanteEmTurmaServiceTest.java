@@ -1,9 +1,9 @@
 package br.com.caelum.cursos.domain.core.matricula;
 
-import br.com.caelum.cursos.domain.builders.CursoBuilder;
-import br.com.caelum.cursos.domain.builders.EstudanteBuilder;
-import br.com.caelum.cursos.domain.builders.SalaBuilder;
-import br.com.caelum.cursos.domain.builders.TurmaBuilder;
+import br.com.caelum.cursos.builders.CursoBuilder;
+import br.com.caelum.cursos.builders.EstudanteBuilder;
+import br.com.caelum.cursos.builders.SalaBuilder;
+import br.com.caelum.cursos.builders.TurmaBuilder;
 import br.com.caelum.cursos.domain.core.RegraDeNegocioException;
 import br.com.caelum.cursos.domain.core.estudante.Estudante;
 import br.com.caelum.cursos.domain.core.estudante.Telefone;

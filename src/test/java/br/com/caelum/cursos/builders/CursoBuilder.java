@@ -1,4 +1,4 @@
-package br.com.caelum.cursos.domain.builders;
+package br.com.caelum.cursos.builders;
 
 import br.com.caelum.cursos.domain.core.curso.Curso;
 import br.com.caelum.cursos.domain.core.curso.Nivel;
