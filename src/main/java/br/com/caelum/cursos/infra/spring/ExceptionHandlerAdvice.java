@@ -14,7 +14,7 @@ public class ExceptionHandlerAdvice {
 
     record ErroDeValidacao(String campo, String erro){
         ErroDeValidacao(FieldError field) {
-            this(field.getField(), field.getDefaultMessage());
+            this(field.getField().replace("AsString", ""), field.getDefaultMessage());
         }
     }
 
