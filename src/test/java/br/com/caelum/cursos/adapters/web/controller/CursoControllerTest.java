@@ -53,7 +53,7 @@ class CursoControllerTest {
     }
 
     @Test
-    @DisplayName("Nao deveria cadastrar cruso com dados invalidos")
+    @DisplayName("Nao deveria cadastrar curso com dados invalidos")
     void cenario1() throws Exception {
         var response = mvc
                 .perform(post(URI)
