@@ -1,6 +1,7 @@
 package br.com.caelum.cursos.infra.spring;
 
 import br.com.caelum.cursos.domain.core.RegraDeNegocioException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,6 +27,11 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(RegraDeNegocioException.class)
     public ResponseEntity<String> handleRegraDeNegocioException(RegraDeNegocioException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotfound(EntityNotFoundException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

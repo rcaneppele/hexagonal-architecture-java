@@ -1,0 +1,13 @@
+CREATE TABLE turmas(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    curso_id BIGINT NOT NULL,
+    sala_id BIGINT NOT NULL,
+    turno VARCHAR(50) NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+
+    PRIMARY KEY(id),
+    CONSTRAINT TURMA_FK_CURSO FOREIGN KEY(curso_id) REFERENCES cursos(id),
+    CONSTRAINT TURMA_FK_SALA FOREIGN KEY(sala_id) REFERENCES salas(id)
+);
